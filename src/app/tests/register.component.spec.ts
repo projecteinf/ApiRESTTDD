@@ -45,25 +45,15 @@ describe('Register Component', () => {
     const message: HTMLSpanElement = fixture.nativeElement.querySelector("p span") as HTMLSpanElement;
 
     expect(message.textContent).toBe("Usuari creat satisfactòriament");
-  });
-
+  }); 
+  
   it('Error creating the user message', async () => {
     let userService: UserService = TestBed.inject(UserService); 
 
     const fixture = TestBed.createComponent(RegisterComponent);
     
     const mockData = {
-      "username": "miquel",
-      "email": "miquel@gmail.com",
-      "password": "El Meu Password",
-      "id": "868",
-      "createdAt": "2024-11-07T15:22:19.534Z"
-    };
-
-    const data = {
-      "username": "miquel",
-      "email": "miquel@gmail.com",
-      "password": "El Meu Password"
+      "error": "Invalid data"
     };
 
     spyOn(userService, "postUser").and.returnValue(of(mockData)) ;
@@ -74,10 +64,11 @@ describe('Register Component', () => {
 
     fixture.detectChanges();
 
+   
     const message: HTMLSpanElement = fixture.nativeElement.querySelector("p span") as HTMLSpanElement;
 
     expect(message.textContent).toBe("Error en la creació de l'usuari");
   });
 
-  
+
 });

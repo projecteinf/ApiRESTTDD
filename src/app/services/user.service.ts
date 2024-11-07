@@ -9,8 +9,7 @@ export class UserService {
 
   constructor(private http: HttpClient) { }
 
-  postUser(User:{username: string, email: string, password: string}): 
-    Observable<any> 
+  postUser(User:{username: string, email: string, password: string}): Observable<any> 
   {
     return this.http.post<any>("https://reqres.in/api/users",User);
   }
