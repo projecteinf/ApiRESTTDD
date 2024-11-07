@@ -2,19 +2,24 @@ import { TestBed } from '@angular/core/testing';
 import { RegisterComponent } from '../components/register/register.component';
 import { Observable, of } from 'rxjs';
 import { UserService } from '../services/user.service';
+import { provideHttpClient } from '@angular/common/http';
 
 
 describe('Register Component', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      providers: [],
+      providers: [
+        provideHttpClient()
+      ],
       imports: [RegisterComponent],
     }).compileComponents();
   });
 
-  it('The user has been created message', () => {
+  it('The user has been created message', async () => {
     let userService: UserService = TestBed.inject(UserService); 
+
     const fixture = TestBed.createComponent(RegisterComponent);
+    
     const mockData = {
       "username": "miquel",
       "email": "miquel@gmail.com",
@@ -32,7 +37,7 @@ describe('Register Component', () => {
     spyOn(userService, "postUser").and.returnValue(of(mockData)) ;
     fixture.detectChanges();
 
-    const submit: HTMLButtonElement = fixture.nativeElement.querySelector("Button") as HTMLButtonElement;
+    const submit: HTMLButtonElement = fixture.nativeElement.querySelector("button") as HTMLButtonElement;
     submit.click();
 
     fixture.detectChanges();
