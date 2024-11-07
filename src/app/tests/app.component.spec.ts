@@ -4,12 +4,13 @@ import { provideRouter, Router, RouterLink, RouterLinkWithHref } from '@angular/
 import { routes } from '../app.routes';
 import { DebugElement } from '@angular/core';
 import { By } from '@angular/platform-browser';
+import { provideHttpClient } from '@angular/common/http';
 
 
 describe('AppComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      providers: [provideRouter(routes),RouterLink],
+      providers: [provideRouter(routes),RouterLink,provideHttpClient()],
       imports: [AppComponent],
     }).compileComponents();
   });
@@ -36,8 +37,7 @@ describe('AppComponent', () => {
   it('Has menu with option Register', async () => {
     const fixture = TestBed.createComponent(AppComponent);
     const router : Router = TestBed.inject(Router);
-    
-    
+        
     fixture.detectChanges();
     router.initialNavigation();
 
