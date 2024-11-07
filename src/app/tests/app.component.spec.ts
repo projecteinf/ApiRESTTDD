@@ -1,13 +1,15 @@
 import { TestBed } from '@angular/core/testing';
 import { AppComponent } from '../app.component';
-import { provideRouter, Router } from '@angular/router';
+import { provideRouter, Router, RouterLink, RouterLinkWithHref } from '@angular/router';
 import { routes } from '../app.routes';
+import { DebugElement } from '@angular/core';
+import { By } from '@angular/platform-browser';
 
 
 describe('AppComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      providers: [provideRouter(routes)],
+      providers: [provideRouter(routes),RouterLink],
       imports: [AppComponent],
     }).compileComponents();
   });
@@ -28,20 +30,25 @@ describe('AppComponent', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('h1')?.textContent).toContain('Hello, apiTDD');
+    expect(compiled.querySelector('h1')?.textContent).toContain('Request API Example');
   });
 
-  it('Has menu with option Register', () => {
-    const router : Router = TestBed.inject(Router);
+  it('Has menu with option Register', async () => {
     const fixture = TestBed.createComponent(AppComponent);
-    const routerSpy = spyOn(router,"navigate");
-
-    fixture.detectChanges();
-    const compiled = fixture.nativeElement as HTMLElement;
-    const registerOption:HTMLLinkElement = compiled.querySelector('nav ul li:first-child a') as HTMLLinkElement;
+    const router : Router = TestBed.inject(Router);
     
-    registerOption.click();
+    
     fixture.detectChanges();
-    expect(routerSpy).toHaveBeenCalledOnceWith(['/register']);
+    router.initialNavigation();
+
+    const registerOptions:DebugElement[] = fixture.debugElement.queryAll(By.directive(RouterLinkWithHref));
+    
+    const link:HTMLAnchorElement = registerOptions[0].nativeElement as HTMLAnchorElement;
+    link.click();
+    fixture.detectChanges();
+    await fixture.whenStable();
+    expect(router.url).toBe('/register');
+    
+    
   });
 });
