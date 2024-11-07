@@ -38,7 +38,7 @@ describe('AppComponent', () => {
 
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
-    const registerOption:HTMLLinkElement = compiled.querySelector('nav ul li:first-child') as HTMLLinkElement;
+    const registerOption:HTMLLinkElement = compiled.querySelector('nav ul li:first-child a') as HTMLLinkElement;
     
     registerOption.click();
     fixture.detectChanges();
