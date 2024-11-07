@@ -1,6 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import { RegisterComponent } from '../components/register/register.component';
 import { of } from 'rxjs';
+import { UserService } from '../services/user.service';
 
 
 describe('Register Component', () => {
@@ -27,7 +28,7 @@ describe('Register Component', () => {
       "password": "El Meu Password"
     };
 
-    spyOn(registerService, "postUser").and.returnValue(of(mockData));
+    spyOn(UserService, "postUser").and.returnValue(of(mockData));
     fixture.detectChanges();
 
     const submit: HTMLButtonElement = fixture.nativeElement.querySelector("Button") as HTMLButtonElement;
