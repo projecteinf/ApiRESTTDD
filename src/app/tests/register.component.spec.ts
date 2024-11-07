@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 import { RegisterComponent } from '../components/register/register.component';
-import { of } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { UserService } from '../services/user.service';
 
 
@@ -13,6 +13,7 @@ describe('Register Component', () => {
   });
 
   it('The user has been created message', () => {
+    let userService: UserService = TestBed.inject(UserService); 
     const fixture = TestBed.createComponent(RegisterComponent);
     const mockData = {
       "username": "miquel",
@@ -28,7 +29,7 @@ describe('Register Component', () => {
       "password": "El Meu Password"
     };
 
-    spyOn(UserService, "postUser").and.returnValue(of(mockData));
+    spyOn(userService, "postUser").and.returnValue(of(mockData)) ;
     fixture.detectChanges();
 
     const submit: HTMLButtonElement = fixture.nativeElement.querySelector("Button") as HTMLButtonElement;
