@@ -15,7 +15,7 @@ describe('Register Component', () => {
     }).compileComponents();
   });
 
-  it('The user has been created message', async () => {
+  it('The user has been created message',  () => {
     let userService: UserService = TestBed.inject(UserService); 
 
     const fixture = TestBed.createComponent(RegisterComponent);
@@ -44,7 +44,7 @@ describe('Register Component', () => {
     expect(infoMessage.textContent).toBe("Usuari creat satisfactòriament");
   }); 
   
-  it('Error creating the user message', async () => {
+  it('Error creating the user message',  () => {
     let userService: UserService = TestBed.inject(UserService); 
 
     const fixture = TestBed.createComponent(RegisterComponent);
@@ -71,4 +71,13 @@ describe('Register Component', () => {
   });
 
 
+  it('Submit button is enabled if data is not saved or saving', async () => {
+    const fixture = TestBed.createComponent(RegisterComponent);
+    fixture.detectChanges();
+    
+    console.log(fixture.nativeElement);
+    const submitEnabled: HTMLButtonElement = fixture.nativeElement.querySelector("button") as HTMLButtonElement;
+    expect(submitEnabled.getAttribute("disabled")).toBeFalse();
+    
+  })
 });
