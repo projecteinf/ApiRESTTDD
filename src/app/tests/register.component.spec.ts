@@ -20,7 +20,7 @@ describe('Register Component', () => {
 
     const fixture = TestBed.createComponent(RegisterComponent);
     
-    const mockData = {
+    const response = {
       "username": "miquel",
       "email": "miquel@gmail.com",
       "password": "El Meu Password",
@@ -28,23 +28,20 @@ describe('Register Component', () => {
       "createdAt": "2024-11-07T15:22:19.534Z"
     };
 
-    const data = {
-      "username": "miquel",
-      "email": "miquel@gmail.com",
-      "password": "El Meu Password"
-    };
-
-    spyOn(userService, "postUser").and.returnValue(of(mockData)) ;
+    spyOn(userService, "postUser").and.returnValue(of(response)) ;
     fixture.detectChanges();
+
+    const message: HTMLSpanElement = fixture.nativeElement.querySelector("p span") as HTMLSpanElement;
+    expect(message.textContent).toBe("");
 
     const submit: HTMLButtonElement = fixture.nativeElement.querySelector("button") as HTMLButtonElement;
     submit.click();
 
     fixture.detectChanges();
 
-    const message: HTMLSpanElement = fixture.nativeElement.querySelector("p span") as HTMLSpanElement;
+    const infoMessage: HTMLSpanElement = fixture.nativeElement.querySelector("p span") as HTMLSpanElement;
 
-    expect(message.textContent).toBe("Usuari creat satisfactòriament");
+    expect(infoMessage.textContent).toBe("Usuari creat satisfactòriament");
   }); 
   
   it('Error creating the user message', async () => {
@@ -52,12 +49,15 @@ describe('Register Component', () => {
 
     const fixture = TestBed.createComponent(RegisterComponent);
     
-    const mockData = {
+    const response = {
       "error": "Invalid data"
     };
 
-    spyOn(userService, "postUser").and.returnValue(of(mockData)) ;
+    spyOn(userService, "postUser").and.returnValue(of(response)) ;
     fixture.detectChanges();
+
+    const message: HTMLSpanElement = fixture.nativeElement.querySelector("p span") as HTMLSpanElement;
+    expect(message.textContent).toBe("");
 
     const submit: HTMLButtonElement = fixture.nativeElement.querySelector("button") as HTMLButtonElement;
     submit.click();
@@ -65,9 +65,9 @@ describe('Register Component', () => {
     fixture.detectChanges();
 
    
-    const message: HTMLSpanElement = fixture.nativeElement.querySelector("p span") as HTMLSpanElement;
+    const errorMessage: HTMLSpanElement = fixture.nativeElement.querySelector("p span") as HTMLSpanElement;
 
-    expect(message.textContent).toBe("Error en la creació de l'usuari");
+    expect(errorMessage.textContent).toBe("Error en la creació de l'usuari");
   });
 
 
