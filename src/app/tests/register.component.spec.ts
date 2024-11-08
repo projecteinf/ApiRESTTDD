@@ -39,9 +39,7 @@ describe('Register Component', () => {
 
     fixture.detectChanges();
 
-    const infoMessage: HTMLSpanElement = fixture.nativeElement.querySelector("p span") as HTMLSpanElement;
-
-    expect(infoMessage.textContent).toBe("Usuari creat satisfactòriament");
+    expect(message.textContent).toBe("Usuari creat satisfactòriament");
   }); 
   
   it('Error creating the user message',  () => {
@@ -64,10 +62,7 @@ describe('Register Component', () => {
 
     fixture.detectChanges();
 
-   
-    const errorMessage: HTMLSpanElement = fixture.nativeElement.querySelector("p span") as HTMLSpanElement;
-
-    expect(errorMessage.textContent).toBe("Error en la creació de l'usuari");
+    expect(message.textContent).toBe("Error en la creació de l'usuari");
   });
 
 
@@ -75,9 +70,10 @@ describe('Register Component', () => {
     const fixture = TestBed.createComponent(RegisterComponent);
     fixture.detectChanges();
     
-    console.log(fixture.nativeElement);
     const submitEnabled: HTMLButtonElement = fixture.nativeElement.querySelector("button") as HTMLButtonElement;
     expect(submitEnabled.getAttribute("disabled")).toBeFalsy();
-    
-  })
+  });
+
+
+  
 });
