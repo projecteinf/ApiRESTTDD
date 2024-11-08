@@ -75,5 +75,18 @@ describe('Register Component', () => {
   });
 
 
-  
+  it('Submit button is disabled if data is saving', async () => {
+    const fixture = TestBed.createComponent(RegisterComponent);
+    fixture.detectChanges();
+    
+    const submit: HTMLButtonElement = fixture.nativeElement.querySelector("button") as HTMLButtonElement;
+    expect(submit.getAttribute("disabled")).toBeFalsy();
+    submit.click();
+    expect(submit.getAttribute("disabled")).toBeTruthy();
+    
+    await fixture.whenStable();
+    fixture.detectChanges();
+    expect(submit.disabled).toBeFalse();
+  });
+
 });
