@@ -77,7 +77,7 @@ describe('Register Component', () => {
     
     console.log(fixture.nativeElement);
     const submitEnabled: HTMLButtonElement = fixture.nativeElement.querySelector("button") as HTMLButtonElement;
-    expect(submitEnabled.getAttribute("disabled")).toBeFalse();
+    expect(submitEnabled.getAttribute("disabled")).toBeFalsy();
     
   })
 });
