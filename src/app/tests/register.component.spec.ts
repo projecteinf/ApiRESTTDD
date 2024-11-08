@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 import { RegisterComponent } from '../components/register/register.component';
-import { Observable, of } from 'rxjs';
+import { of } from 'rxjs';
 import { UserService } from '../services/user.service';
 import { provideHttpClient } from '@angular/common/http';
 
@@ -66,7 +66,7 @@ describe('Register Component', () => {
   });
 
 
-  it('Submit button is enabled if data is not saved or saving', async () => {
+  it('Submit button is enabled if data is not saved or saving', () => {
     const fixture = TestBed.createComponent(RegisterComponent);
     fixture.detectChanges();
     
@@ -77,15 +77,32 @@ describe('Register Component', () => {
 
   it('Submit button is disabled if data is saving', async () => {
     const fixture = TestBed.createComponent(RegisterComponent);
-    fixture.detectChanges();
+
+    const response = {
+      "username": "miquel",
+      "email": "miquel@gmail.com",
+      "password": "El Meu Password",
+      "id": "868",
+      "createdAt": "2024-11-07T15:22:19.534Z"
+    };
     
+    let userService: UserService = TestBed.inject(UserService); 
+    spyOn(userService, "postUser").and.returnValue(of(response)) ;
+
     const submit: HTMLButtonElement = fixture.nativeElement.querySelector("button") as HTMLButtonElement;
-    expect(submit.getAttribute("disabled")).toBeFalsy();
+    await fixture.whenStable();
+    fixture.detectChanges();
+
+    console.log("ABANS DE CLICK",fixture.nativeElement);
+    expect(submit.disabled).toBeFalse();
     submit.click();
-    expect(submit.getAttribute("disabled")).toBeTruthy();
+    fixture.detectChanges();
+    console.log("DESPRÉS DE CLICK",fixture.nativeElement);
+    expect(submit.disabled).toBeTrue();
     
     await fixture.whenStable();
     fixture.detectChanges();
+    console.log("QUAN ESTÀ ESTABLE",fixture.nativeElement);
     expect(submit.disabled).toBeFalse();
   });
 
