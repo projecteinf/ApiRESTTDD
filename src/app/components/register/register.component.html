@@ -2,4 +2,4 @@
 
 <p><span>{{this.errorMessage}}</span></p>
 
-<button [disabled]="false" (click)="submit()">Submit</button>
+<button [disabled]="this.isSaving" (click)="submit()">Submit</button>

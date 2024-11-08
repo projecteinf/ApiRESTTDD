@@ -12,8 +12,10 @@ export class RegisterComponent {
   constructor (private userService: UserService) {}
 
   errorMessage: string = "";
+  isSaving:boolean = false;
 
   submit():void {
+    this.isSaving = true;
     this.userService.postUser({
       "username": "miquel",
       "email": "miquel@gmail.com",
@@ -25,6 +27,7 @@ export class RegisterComponent {
         console.log("ENTRA AMB ERROR!");
         this.errorMessage = "Error en la creació de l'usuari";
       }
+      this.isSaving = false;
     })  
   }
 }

@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 import { RegisterComponent } from '../components/register/register.component';
-import { of } from 'rxjs';
+import { delay, of } from 'rxjs';
 import { UserService } from '../services/user.service';
 import { provideHttpClient } from '@angular/common/http';
 
@@ -87,7 +87,9 @@ describe('Register Component', () => {
     };
     
     let userService: UserService = TestBed.inject(UserService); 
-    spyOn(userService, "postUser").and.returnValue(of(response)) ;
+    spyOn(userService, "postUser").and.
+        returnValue(of(response).
+        pipe(delay(1000)));  // Si no fem delay, el canvi d'estat del botó és massa ràpid i no el podem detectar en el test
 
     const submit: HTMLButtonElement = fixture.nativeElement.querySelector("button") as HTMLButtonElement;
     await fixture.whenStable();
