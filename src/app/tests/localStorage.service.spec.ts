@@ -1,7 +1,8 @@
 import { TestBed } from '@angular/core/testing';
 
-import { LocalStorageService } from '../services/localStorage.service';
 import { provideHttpClient } from '@angular/common/http';
+import { LocalStorageService } from '../services/localStorage.service';
+
 
 describe('Local Storage Service', () => {
   let service: LocalStorageService;
@@ -17,11 +18,22 @@ describe('Local Storage Service', () => {
     expect(service).toBeTruthy();
   });
 
-  it('Creates an entry in the localStorage', () =>{
+  it('Creates an entry in the localStorage', () => {
+    console.log('START - Creates an entry in the localStorage');
+    
+    
+    let user: any = {"username":"projecteinf"};
+    
     service.clear("User");
-    service.setItem("User","{'username':'projecteinf'}");
-    const user=service.getItem("User");
+    service.setItem("User", JSON.stringify(user));  
+    
+    user = service.getItem("User");
+    
+    console.log(user);  // Ha de mostrar l'objecte amb la propietat `username`
+    
     expect(user.username).toBe("projecteinf");
-  })
+    
+    console.log('END - Creates an entry in the localStorage');
+  });
 
 });
